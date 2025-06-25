@@ -1,0 +1,11 @@
+all:
+  children:
+    foo:
+    bar:
+  vars:
+    var1: var1
+    var2: var2
+
+baz:
+  hosts:
+    host01:

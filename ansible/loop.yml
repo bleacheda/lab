@@ -1,0 +1,17 @@
+---
+- name: Test loops
+  hosts: localhost
+
+  tasks:
+
+    - name: loop
+      command: |
+        echo {{ cert_name }}
+      loop:
+        - cert1
+        - cert2
+        - cert3
+      loop_control:
+        loop_var: item
+      vars:
+        cert_name: "{{ item }}"
