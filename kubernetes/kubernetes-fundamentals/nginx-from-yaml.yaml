@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx-from-yaml
+  name: nginx-from-yaml
+spec:
+  containers:
+  - image: nginx
+    name: nginx-from-yaml
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
