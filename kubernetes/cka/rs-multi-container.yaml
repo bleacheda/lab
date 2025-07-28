@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: myapp-rs-multi
+  labels:
+    app: myapp-multi
+spec:
+  template:
+    metadata:
+      name: myapp-pod-multi
+      labels:
+        app: myapp-multi
+        type: front-end
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx
+      - name: pause-container
+        image: k8s.gcr.io/pause
+  replicas: 3
+  selector:
+    matchLabels:
+      type: front-end
