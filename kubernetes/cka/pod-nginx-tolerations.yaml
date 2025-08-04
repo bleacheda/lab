@@ -1,12 +1,16 @@
 apiVersion: v1
 kind: Pod
-
 metadata:
   name: myapp-pod
   labels:
     app: myapp
     type: front-end
 spec:
+  tolerations:
+  - effect: NoSchedule
+    key: zone
+    operator: Equal
+    value: green
   containers:
   - name: nginx-container
     image: nginx

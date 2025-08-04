@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-test-nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      hello: world
+  template:
+    metadata:
+      name: pod-nginx
+      labels:
+        hello: world
+    spec:
+      containers:
+      - image: nginx:1.8
+        name: container-nginx

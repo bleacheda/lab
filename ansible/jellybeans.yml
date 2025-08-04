@@ -1,0 +1,12 @@
+
+    - name: This is the task name
+      # TODO: improvement here
+      ansible.builtin.shell:
+        cmd: |
+          command argument1 argument2
+        executable: /bin/bash
+
+
+
+
+

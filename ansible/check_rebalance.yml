@@ -1,0 +1,40 @@
+---
+- name: Check rebalance status
+  hosts: localhost
+  # vars:
+  #   var_rebalanced: "rebalanced=true"
+
+  tasks:
+
+    - name: Find latest log file
+      ansible.builtin.shell: |
+        set -o pipefail
+        ls -1tr app* | tail -n 1
+      args:
+        chdir: opt/app/log
+      register: check_latest_log_file
+      changed_when: false
+
+    - name: Show latest file
+      ansible.builtin.debug:
+        var: check_latest_log_file.stdout
+
+    - name: Check if rebalance is in progress (up to 3h)
+      # TODO: include check for non-existent log file!!!
+      ansible.builtin.shell:
+        cmd: |
+          set -o pipefail
+          grep {{ var_rebalanced | quote }} $(ls -1tr app* | tail -n 1)
+        executable: /bin/bash
+        chdir: opt/app/log
+      register: check_rebalance
+      changed_when: false
+      until: check_rebalance.rc == 0
+      retries: 5
+      delay: 5
+      vars:
+        var_rebalanced: "rebalanced=true"
+
+    - name: Output result of rebalance in progress check
+      ansible.builtin.debug:
+        var: check_rebalance.stdout
